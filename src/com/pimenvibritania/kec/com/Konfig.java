@@ -19,7 +19,7 @@ public class Konfig {
     public static Connection configDB()throws SQLException{
         try{
             
-            String url = "jdbc.mysql://localhost:3306/kec";
+            String url = "jdbc:mysql://localhost:3306/kec";
             String user = "root";
             String pass = "";
             

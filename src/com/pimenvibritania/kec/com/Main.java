@@ -7,6 +7,11 @@ package com.pimenvibritania.kec.com;
 
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
+import java.sql.Connection;
+import javax.swing.table.DefaultTableModel;
+import java.sql.SQLException;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 
 /**
@@ -18,10 +23,87 @@ public class Main extends javax.swing.JFrame {
     /**
      * Creates new form Main
      */
+    
+    private void tampilkan_data(){
+        DefaultTableModel model = new DefaultTableModel();
+        //model.addColumn("No");
+        model.addColumn("No Siswa");
+        model.addColumn("Nama");
+        //model.addColumn("TTL");
+        model.addColumn("Asal Pend"); //4
+//        model.addColumn("Kelas");
+//        model.addColumn("Pekerjaan");
+//        model.addColumn("Alm. KTP");
+//        model.addColumn("Alm. Sekarang");
+//        model.addColumn("Email");
+//        model.addColumn("Umur");
+//        model.addColumn("No HP");
+//        model.addColumn("Anak Ke");
+//        model.addColumn("Jml Saudara");
+//        model.addColumn("IG");
+//        model.addColumn("FB");
+        model.addColumn("Nama Ibu"); //16
+//        model.addColumn("Pekerjaan Ibu");
+//        model.addColumn("No HP Ibu");
+//        model.addColumn("Nama Ayah");
+//        model.addColumn("Pekerjaan Ayah");
+//        model.addColumn("No HP Ayah");
+//        model.addColumn("Alamat Ortu");
+//        model.addColumn("Tlp Rumah");
+//        model.addColumn("Email Ortu");
+        model.addColumn("Program"); //25
+        model.addColumn("Pembayaran"); //26
+//        model.addColumn("Biaya");
+//        model.addColumn("Dibayar");
+//        model.addColumn("Sisa");
+
+      tTable.setRowHeight(2, 70);
+      
+      TableColumnModel cM = tTable.getColumnModel();
+      cM.getColumn(0).setPreferredWidth(30);
+    
+      
+       
+      
+
+
+        
+        
+        try{
+            
+            //int no = 1;
+            String sql = "SELECT * FROM siswa";
+            java.sql.Connection conn = (Connection)Konfig.configDB();
+            java.sql.Statement stm = conn.createStatement();
+            java.sql.ResultSet res = stm.executeQuery(sql);
+            
+            while(res.next()){
+                model.addRow(new Object[]{
+                    res.getString(1),res.getString(2),//res.getString(3),
+                    res.getString(4),
+                    //res.getString(5),res.getString(6),res.getString(7),res.getString(8),
+                    //res.getString(9),res.getString(10),res.getString(11),res.getString(12),
+                    //res.getString(13),res.getString(14),res.getString(15),
+                    res.getString(16),
+                    //res.getString(17),res.getString(18),res.getString(19),res.getString(20),
+                    //res.getString(21),res.getString(22),res.getString(23),res.getString(24),
+                    res.getString(25),res.getString(26)//,res.getString(27),res.getString(28),
+                    //res.getString(29)
+                    
+                });
+            }
+            tTable.setModel(model);
+        
+        }catch(SQLException e){
+            System.out.println("Error" + e.getMessage());
+        }
+
+        
+    }
     public Main() {
         initComponents();
-        setSize(800,500);
-        setResizable(false);
+        tampilkan_data();
+    
     }
     
     public void close(){
@@ -41,16 +123,47 @@ public class Main extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tTable = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         btnTambah = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Kampung English Course");
+        setResizable(false);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("DATA SISWA");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tTable.setAutoCreateRowSorter(true);
+        tTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
@@ -60,9 +173,8 @@ public class Main extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jTextField1.setText("Search");
+        tTable.setFocusable(false);
+        jScrollPane1.setViewportView(tTable);
 
         btnTambah.setText("Tambah Data");
         btnTambah.addActionListener(new java.awt.event.ActionListener() {
@@ -71,40 +183,55 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Cari");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 741, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jButton1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(361, 361, 361)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 741, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(32, Short.MAX_VALUE))
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel1)))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(20, 20, 20)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTambah))
+                    .addComponent(btnTambah)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
@@ -114,6 +241,11 @@ public class Main extends javax.swing.JFrame {
         n.setVisible(true);
         close();
     }//GEN-LAST:event_btnTambahActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -152,9 +284,11 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTambah;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tTable;
     // End of variables declaration//GEN-END:variables
 }
