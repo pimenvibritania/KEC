@@ -96,8 +96,8 @@ public class Print extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(26, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
@@ -108,17 +108,17 @@ public class Print extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addGap(25, 25, 25))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
+                .addGap(22, 22, 22)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -126,16 +126,17 @@ public class Print extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(102, 102, 102)
                         .addComponent(jButton2)
                         .addGap(18, 18, 18)
                         .addComponent(jButton1)
-                        .addGap(122, 122, 122))))
+                        .addContainerGap(135, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())))
         );
 
         pack();
@@ -160,8 +161,11 @@ public class Print extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         
-        ShowEdit SE = new ShowEdit();
-        SE.setVisible(true);
+//        ShowEdit SE = new ShowEdit();
+//        SE.setVisible(true);
+        
+            Main main = new Main();
+            main.setVisible(true);
         close();
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -235,12 +239,12 @@ public class Print extends javax.swing.JFrame {
 //                txtDibayar.setText(add28);
                 String add29 = rs.getString("sisa");
 //                txtSisa.setText(add29);
-                DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd - HH:mm:ss");
+                DateFormat sdf = new SimpleDateFormat("EEEE, dd/MM/yyyy - HH:mm");
                  Date date = new Date();
         
                 
                 
-                tax.setText("KAMPUNG ENGLISH COURSE\n"
+                tax.setText("======================================================\nKAMPUNG ENGLISH COURSE\n"
                         + "======================================================\n\n"
                         + "Keterangan           : "+add26+"\n\n"
                                 + "No                         : "+add1+"\n"
@@ -250,8 +254,8 @@ public class Print extends javax.swing.JFrame {
                                 + "Biaya                     : "+add27+"\n"
                                 + "Dibayar                  : "+add28+"\n"
                                 + "Sisa                       : "+add29+"\n\n"
-                +"======================================================\n"
-                +sdf.format(date));
+                +"======================================================\n\n"
+                +sdf.format(date)+"\n\n\n\n\n"+"Kampung English Course");
             }
         } catch (SQLException ex) {
             Logger.getLogger(ShowEdit.class.getName()).log(Level.SEVERE, null, ex);
@@ -295,7 +299,7 @@ public class Print extends javax.swing.JFrame {
 
     private void initTax(){
         tax.setEditable(false);
-        tax.setText("KAMPUNG ENGLISH COURSE\n"
+        tax.setText("======================================================\nKAMPUNG ENGLISH COURSE\n"
                 + "======================================================");
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -157,6 +157,12 @@ public class ShowEdit extends javax.swing.JFrame {
 
         jLabel17.setText("Facebook");
 
+        txtNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNoActionPerformed(evt);
+            }
+        });
+
         txtPekerjaan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPekerjaanActionPerformed(evt);
@@ -648,6 +654,7 @@ public class ShowEdit extends javax.swing.JFrame {
             if(rs.next()){
                 String add1 = rs.getString("no");
                 txtNo.setText(add1);
+                txtNo.setEditable(false);
                 String add2 = rs.getString("nama");
                 txtNama.setText(add2);
                 String add3 = rs.getString("ttl");
@@ -714,6 +721,11 @@ public class ShowEdit extends javax.swing.JFrame {
     private void txtCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCariActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCariActionPerformed
+
+    private void txtNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNoActionPerformed
+        // TODO add your handling code here:
+        txtNo.setEditable(false);
+    }//GEN-LAST:event_txtNoActionPerformed
 
     /**
      * @param args the command line arguments

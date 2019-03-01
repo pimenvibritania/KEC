@@ -210,6 +210,12 @@ public class NewData extends javax.swing.JFrame {
 
         jLabel19.setText("Facebook");
 
+        txtNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNoActionPerformed(evt);
+            }
+        });
+
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel20.setText("Data Orang Tua");
 
@@ -549,6 +555,11 @@ public class NewData extends javax.swing.JFrame {
         close();
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNoActionPerformed
+        // TODO add your handling code here:
+//        txtNo.setEditable(false);
+    }//GEN-LAST:event_txtNoActionPerformed
 
     /**
      * @param args the command line arguments
