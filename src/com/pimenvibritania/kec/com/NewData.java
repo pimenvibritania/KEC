@@ -5,9 +5,12 @@
  */
 package com.pimenvibritania.kec.com;
 
+import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.print.PrinterException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import javafx.print.PrinterJob;
 import javax.swing.JOptionPane;
 
@@ -57,6 +60,7 @@ public class NewData extends javax.swing.JFrame {
     
     public NewData() {
         initComponents();
+        kosongkan_form();
         
     }
     
@@ -141,6 +145,7 @@ public class NewData extends javax.swing.JFrame {
         txtSisa = new javax.swing.JTextField();
         btnJml = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Kampung English Course");
@@ -241,6 +246,13 @@ public class NewData extends javax.swing.JFrame {
 
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
 
+        jButton1.setText("Kembali");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -290,28 +302,6 @@ public class NewData extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addComponent(jLabel4)
                             .addComponent(jLabel20)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel21)
-                                    .addComponent(jLabel22)
-                                    .addComponent(jLabel23)
-                                    .addComponent(jLabel24)
-                                    .addComponent(jLabel25)
-                                    .addComponent(jLabel26)
-                                    .addComponent(jLabel27)
-                                    .addComponent(jLabel28)
-                                    .addComponent(jLabel29))
-                                .addGap(14, 14, 14)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtJobIbu)
-                                    .addComponent(txtNoIbu, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNamaAyah)
-                                    .addComponent(txtJobAyah)
-                                    .addComponent(txtNoAyah, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtAlmOrtu)
-                                    .addComponent(txtTlp, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNamaIbu)
-                                    .addComponent(txtEmailOrtu, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(cbPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -328,7 +318,31 @@ public class NewData extends javax.swing.JFrame {
                                             .addComponent(btnJml))
                                         .addComponent(txtBiaya, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(txtSisa, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addComponent(cbProgram, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(cbProgram, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jButton1)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel21)
+                                        .addComponent(jLabel22)
+                                        .addComponent(jLabel23)
+                                        .addComponent(jLabel24)
+                                        .addComponent(jLabel25)
+                                        .addComponent(jLabel26)
+                                        .addComponent(jLabel27)
+                                        .addComponent(jLabel28)
+                                        .addComponent(jLabel29))
+                                    .addGap(14, 14, 14)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtJobIbu)
+                                        .addComponent(txtNoIbu, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtNamaAyah)
+                                        .addComponent(txtJobAyah)
+                                        .addComponent(txtNoAyah, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtAlmOrtu)
+                                        .addComponent(txtTlp, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtNamaIbu)
+                                        .addComponent(txtEmailOrtu, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addComponent(jLabel1)
                     .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
@@ -337,7 +351,9 @@ public class NewData extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(7, 7, 7)
-                .addComponent(jLabel1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton1))
                 .addGap(1, 1, 1)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -494,14 +510,45 @@ public class NewData extends javax.swing.JFrame {
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
         // TODO add your handling code here:
 
-        Main main = new Main();
-        main.setVisible(true);
-        close();
+        try{
+            String sql = "INSERT INTO siswa VALUES('"+txtNo.getText()+"','"+txtNama.getText()+"','"+txtTtl.getText()+"','"+txtPendidikan.getText()+"','"+txtKelas.getText()+"','"+txtPekerjaan.getText()+"','"+txtAlmKtp.getText()+"','"+txtAlmSkrg.getText()+"','"+txtEmail.getText()+"','"+txtUmur.getText()+"','"+txtNohp.getText()+"','"+txtAnak.getText()+"','"+txtJmlSdr.getText()+"','"+txtIg.getText()+"','"+txtFb.getText()+"','"+txtNamaIbu.getText()+"','"+txtJobIbu.getText()+"','"+txtNoIbu.getText()+"','"+txtNamaAyah.getText()+"','"+txtJobAyah.getText()+"','"+txtNoAyah.getText()+"','"+txtAlmOrtu.getText()+"','"+txtTlp.getText()+"','"+txtEmailOrtu.getText()+"','"+cbProgram.getSelectedItem()+"','"+cbPayment.getSelectedItem()+"','"+txtBiaya.getText()+"','"+txtDibayar.getText()+"','"+txtSisa.getText()+"')" ;
+            java.sql.Connection conn = (Connection)Konfig.configDB();
+            java.sql.PreparedStatement pstm = conn.prepareStatement(sql);
+            pstm.execute();
+            JOptionPane.showMessageDialog(null, "Proses Simpan Data Berhasil...");
+//            tampilkan_data();
+            kosongkan_form();
+            Main main = new Main();
+            main.setVisible(true);
+            close();
+        } catch(HeadlessException | SQLException e){
+            JOptionPane.showMessageDialog(this, "Masukkan Data Dengan Benar!");
+        }
+        
+//        Main main = new Main();
+//        main.setVisible(true);
+//        close();
     }//GEN-LAST:event_btnSimpanActionPerformed
 
     private void btnJmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJmlActionPerformed
         // TODO add your handling code here:
+        int biaya = Integer.parseInt(txtBiaya.getText());
+        int dibayar = Integer.parseInt(txtDibayar.getText());
+        
+        int sisa = biaya - dibayar;
+        
+        txtSisa.setText(Integer.toString(sisa));
+
+        
     }//GEN-LAST:event_btnJmlActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Main main = new Main();
+        main.setVisible(true);
+        close();
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -543,6 +590,7 @@ public class NewData extends javax.swing.JFrame {
     private javax.swing.JButton btnSimpan;
     private javax.swing.JComboBox<String> cbPayment;
     private javax.swing.JComboBox<String> cbProgram;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

@@ -10,12 +10,22 @@ package com.pimenvibritania.kec.com;
  * @author User
  * 
  */
+import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
 import java.text.*;
 import java.awt.print.*;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.print.Printer;
 import javax.swing.JTextArea;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Print extends javax.swing.JFrame {
 
@@ -42,45 +52,94 @@ public class Print extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tax = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        txtCari = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Kampung English Course");
 
         tax.setColumns(20);
         tax.setRows(5);
         tax.setText("dadadlkhadljahd\nad\na\nda\nd\na\nd\nadjkfhkjafa\n\nafalf;asjf;la\n");
         jScrollPane1.setViewportView(tax);
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Print");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
+        jButton2.setText("Kembali");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel1.setText("Cari Siswa");
+
+        txtCari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCariKeyReleased(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel2.setText("PRINT PEMBAYARAN");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(69, 69, 69))
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE)
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)
+                        .addGap(122, 122, 122))))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -92,6 +151,112 @@ public class Print extends javax.swing.JFrame {
             System.err.format("No printer", e.getMessage());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    public void close(){
+        WindowEvent winClosingEvent = new WindowEvent(this,WindowEvent.WINDOW_CLOSING);
+        Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(winClosingEvent);
+    }
+    
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        
+        ShowEdit SE = new ShowEdit();
+        SE.setVisible(true);
+        close();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    
+    private void txtCariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCariKeyReleased
+        // TODO add your handling code here:
+         try {
+            String st = txtCari.getText().trim();
+            java.sql.Connection conn;
+            conn = (Connection)Konfig.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement("SELECT * FROM siswa where nama like'"+st+ "%'");
+            //            pst.setString(1, String.valueOf(txtCari.getText()));
+            java.sql.ResultSet rs = pst.executeQuery();
+
+            if(rs.next()){
+                String add1 = rs.getString("no");
+//                txtNo.setText(add1);
+                String add2 = rs.getString("nama");
+//                txtNama.setText(add2);
+                String add3 = rs.getString("ttl");
+//                txtTtl.setText(add3);
+                String add4 = rs.getString("asal_pendidikan");
+//                txtPendidikan.setText(add4);
+                String add5 = rs.getString("kelas");
+//                txtKelas.setText(add5);
+                String add6 = rs.getString("pekerjaan");
+//                txtPekerjaan.setText(add6);
+                String add7 = rs.getString("alamat_ktp");
+//                txtAlmKtp.setText(add7);
+                String add8 = rs.getString("alamat_sekarang");
+//                txtAlmSkrg.setText(add8);
+                String add9 = rs.getString("email");
+//                txtEmail.setText(add9);
+                String add10 = rs.getString("umur");
+//                txtUmur.setText(add10);
+                String add11 = rs.getString("nohp");
+//                txtNohp.setText(add11);
+                String add12 = rs.getString("anak_ke");
+//                txtAnak.setText(add12);
+                String add13 = rs.getString("jml_saudara");
+//                txtJmlSdr.setText(add13);
+                String add14 = rs.getString("ig");
+//                txtIg.setText(add14);
+                String add15 = rs.getString("fb");
+//                txtFb.setText(add15);
+                String add16 = rs.getString("nama_ibu");
+//                txtNamaIbu.setText(add16);
+                String add17 = rs.getString("pekerjaan_ibu");
+//                txtJobIbu.setText(add17);
+                String add18 = rs.getString("nohp_ibu");
+//                txtNoIbu.setText(add18);
+                String add19 = rs.getString("nama_ayah");
+//                txtNamaAyah.setText(add19);
+                String add20 = rs.getString("pekerjaan_ayah");
+//                txtJobAyah.setText(add20);
+                String add21 = rs.getString("nohp_ayah");
+//                txtNoAyah.setText(add21);
+                String add22 = rs.getString("alamat_ortu");
+//                txtAlmOrtu.setText(add22);
+                String add23 = rs.getString("notlp_rumah");
+//                txtTlp.setText(add23);
+                String add24 = rs.getString("email_ortu");
+//                txtEmailOrtu.setText(add24);
+                String add25 = rs.getString("program");
+//                cbProgram.setSelectedItem(add25);
+                String add26 = rs.getString("payment");
+//                cbPayment.setSelectedItem(add26);
+                String add27 = rs.getString("biaya");
+//                txtBiaya.setText(add27);
+                String add28 = rs.getString("dibayar");
+//                txtDibayar.setText(add28);
+                String add29 = rs.getString("sisa");
+//                txtSisa.setText(add29);
+                DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd - HH:mm:ss");
+                 Date date = new Date();
+        
+                
+                
+                tax.setText("KAMPUNG ENGLISH COURSE\n"
+                        + "======================================================\n\n"
+                        + "Keterangan           : "+add26+"\n\n"
+                                + "No                         : "+add1+"\n"
+                                + "Nama                    : "+add2+"\n"
+                                + "Asal Pendidikan    : "+add4+"\n"
+                                + "Program                : "+add25+"\n\n"
+                                + "Biaya                     : "+add27+"\n"
+                                + "Dibayar                  : "+add28+"\n"
+                                + "Sisa                       : "+add29+"\n\n"
+                +"======================================================\n"
+                +sdf.format(date));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ShowEdit.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_txtCariKeyReleased
 
     /**
      * @param args the command line arguments
@@ -130,10 +295,17 @@ public class Print extends javax.swing.JFrame {
 
     private void initTax(){
         tax.setEditable(false);
+        tax.setText("KAMPUNG ENGLISH COURSE\n"
+                + "======================================================");
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextArea tax;
+    private javax.swing.JTextField txtCari;
     // End of variables declaration//GEN-END:variables
 }

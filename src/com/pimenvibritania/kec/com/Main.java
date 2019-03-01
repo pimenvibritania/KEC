@@ -8,10 +8,16 @@ package com.pimenvibritania.kec.com;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import javax.swing.table.DefaultTableModel;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableRowSorter;
+
+import net.proteanit.sql.DbUtils;
 
 
 /**
@@ -55,7 +61,7 @@ public class Main extends javax.swing.JFrame {
         model.addColumn("Pembayaran"); //26
 //        model.addColumn("Biaya");
 //        model.addColumn("Dibayar");
-//        model.addColumn("Sisa");
+        model.addColumn("Sisa");
 
       tTable.setRowHeight(2, 70);
       
@@ -87,8 +93,8 @@ public class Main extends javax.swing.JFrame {
                     res.getString(16),
                     //res.getString(17),res.getString(18),res.getString(19),res.getString(20),
                     //res.getString(21),res.getString(22),res.getString(23),res.getString(24),
-                    res.getString(25),res.getString(26)//,res.getString(27),res.getString(28),
-                    //res.getString(29)
+                    res.getString(25),res.getString(26),//,res.getString(27),res.getString(28),
+                    res.getString(29)
                     
                 });
             }
@@ -103,6 +109,7 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         tampilkan_data();
+        tTable.setEnabled(false);
     
     }
     
@@ -124,10 +131,11 @@ public class Main extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tTable = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
+        txtCari = new javax.swing.JTextField();
         btnTambah = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
+        jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Kampung English Course");
@@ -174,7 +182,18 @@ public class Main extends javax.swing.JFrame {
             }
         ));
         tTable.setFocusable(false);
+        tTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tTable);
+
+        txtCari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCariKeyReleased(evt);
+            }
+        });
 
         btnTambah.setText("Tambah Data");
         btnTambah.addActionListener(new java.awt.event.ActionListener() {
@@ -183,14 +202,17 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Cari");
+        jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel2.setText("Cari Siswa");
+
+        jButton1.setText("Edit Data");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-
-        jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -202,11 +224,13 @@ public class Main extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 741, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jButton1)
+                            .addComponent(jLabel2)
+                            .addGap(18, 18, 18)
+                            .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
@@ -222,8 +246,9 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTambah)
+                    .addComponent(jLabel2)
                     .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -242,9 +267,55 @@ public class Main extends javax.swing.JFrame {
         close();
     }//GEN-LAST:event_btnTambahActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    
+    private void filter(String query){
+        DefaultTableModel model = new DefaultTableModel();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
+        tTable.setRowSorter(tr);
         
+        tr.setRowFilter(RowFilter.regexFilter(query));
+    }
+    
+    private void tTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tTableMouseClicked
+//        // TODO add your handling code here:
+//        boolean a = tTable.isEditing();
+//        if(a==false){
+//            JOptionPane.showMessageDialog(null, "Table tidak bisa di edit!!");
+//        }
+//        
+//        int baris = tTable.rowAtPoint(evt.getPoint());
+////        ShowEdit SE = new ShowEdit();
+////        SE.setVisible(true);
+
+        
+        
+    }//GEN-LAST:event_tTableMouseClicked
+
+    private void txtCariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCariKeyReleased
+  
+        
+// TODO add your handling code here:
+       try{
+           String st = txtCari.getText().trim();
+           java.sql.Connection conn = (Connection)Konfig.configDB();
+           java.sql.PreparedStatement pst = conn.prepareStatement("SELECT no, nama, asal_pendidikan, nama_ibu, program, payment FROM siswa where nama like'"+st+ "%'");
+//           pst.setString(1, String.valueOf(txtCari.getText().trim()));
+           java.sql.ResultSet rs = pst.executeQuery();
+           tTable.setModel(DbUtils.resultSetToTableModel(rs));
+//           pst.close();
+           
+       }catch(Exception e){
+           JOptionPane.showMessageDialog(null, e);
+           
+       }
+//       
+        
+    }//GEN-LAST:event_txtCariKeyReleased
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        ShowEdit SE = new ShowEdit();
+        SE.setVisible(true);
+        close();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -281,14 +352,28 @@ public class Main extends javax.swing.JFrame {
             }
         });
     }
+    
+    public ResultSet SearchTextList(String nama)throws SQLException{
+        
+        String sql = "SELECT * FROM siswa where nama like?";
+        java.sql.Connection conn = (Connection)Konfig.configDB();
+//        java.sql.Statement stm = conn.createStatement();
+//        java.sql.ResultSet res = stm.executeQuery(sql);
+        java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+        pst.setString(1, nama);
+        java.sql.ResultSet res = pst.executeQuery();
+        return res;
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTambah;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tTable;
+    private javax.swing.JTextField txtCari;
     // End of variables declaration//GEN-END:variables
 }
