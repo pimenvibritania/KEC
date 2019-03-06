@@ -59,7 +59,7 @@ public class Print extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Kampung English Course");
+        setTitle("Kampoong English Course");
 
         tax.setColumns(20);
         tax.setRows(5);
@@ -185,7 +185,7 @@ public class Print extends javax.swing.JFrame {
 //                txtNo.setText(add1);
                 String add2 = rs.getString("nama");
 //                txtNama.setText(add2);
-                String add3 = rs.getString("ttl");
+                java.sql.Date add3 = rs.getDate("ttl");
 //                txtTtl.setText(add3);
                 String add4 = rs.getString("asal_pendidikan");
 //                txtPendidikan.setText(add4);
@@ -209,7 +209,7 @@ public class Print extends javax.swing.JFrame {
 //                txtJmlSdr.setText(add13);
                 String add14 = rs.getString("ig");
 //                txtIg.setText(add14);
-                String add15 = rs.getString("fb");
+  //              String add15 = rs.getString("fb");
 //                txtFb.setText(add15);
                 String add16 = rs.getString("nama_ibu");
 //                txtNamaIbu.setText(add16);
@@ -231,7 +231,7 @@ public class Print extends javax.swing.JFrame {
 //                txtEmailOrtu.setText(add24);
                 String add25 = rs.getString("program");
 //                cbProgram.setSelectedItem(add25);
-                String add26 = rs.getString("payment");
+ //               String add26 = rs.getString("payment");
 //                cbPayment.setSelectedItem(add26);
                 String add27 = rs.getString("biaya");
 //                txtBiaya.setText(add27);
@@ -239,23 +239,31 @@ public class Print extends javax.swing.JFrame {
 //                txtDibayar.setText(add28);
                 String add29 = rs.getString("sisa");
 //                txtSisa.setText(add29);
+                java.sql.Date add30 = rs.getDate("daftar");
+                Date date = add30;
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                String strDate = df.format(date);
+
                 DateFormat sdf = new SimpleDateFormat("EEEE, dd/MM/yyyy - HH:mm");
-                 Date date = new Date();
+                 Date datenow = new Date();
+                String add31 = rs.getString("kelas_p");
+               // cbKelas.setSelectedItem(add31);
         
                 
                 
-                tax.setText("======================================================\nKAMPUNG ENGLISH COURSE\n"
+                tax.setText("======================================================\nKAMPOONG ENGLISH COURSE\n"
                         + "======================================================\n\n"
-                        + "Keterangan           : "+add26+"\n\n"
+                        + "Tanggal Daftar           : "+add30+"\n\n"
                                 + "No                         : "+add1+"\n"
-                                + "Nama                    : "+add2+"\n"
-                                + "Asal Pendidikan    : "+add4+"\n"
-                                + "Program                : "+add25+"\n\n"
-                                + "Biaya                     : "+add27+"\n"
-                                + "Dibayar                  : "+add28+"\n"
-                                + "Sisa                       : "+add29+"\n\n"
+                                + "Nama                   : "+add2+"\n"
+                               // + "Pendidikan    : "+add4+"\n"
+                                + "Program              : "+add25+"\n"
+                                + "Kelas                   : "+add31+"\n\n"
+                                + "Biaya                    : "+add27+"\n"
+                                + "Dibayar                 : "+add28+"\n"
+                                + "Sisa                      : "+add29+"\n\n"
                 +"======================================================\n\n"
-                +sdf.format(date)+"\n\n\n\n\n"+"Kampung English Course");
+                +sdf.format(datenow)+"\n\n\n\n\n"+"Kampung English Course");
             }
         } catch (SQLException ex) {
             Logger.getLogger(ShowEdit.class.getName()).log(Level.SEVERE, null, ex);
@@ -299,7 +307,7 @@ public class Print extends javax.swing.JFrame {
 
     private void initTax(){
         tax.setEditable(false);
-        tax.setText("======================================================\nKAMPUNG ENGLISH COURSE\n"
+        tax.setText("======================================================\nKAMPOONG ENGLISH COURSE\n"
                 + "======================================================");
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

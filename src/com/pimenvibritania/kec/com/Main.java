@@ -36,7 +36,7 @@ public class Main extends javax.swing.JFrame {
         model.addColumn("No Siswa");
         model.addColumn("Nama");
         //model.addColumn("TTL");
-        model.addColumn("Asal Pend"); //4
+//        model.addColumn("Asal Pend"); //4
 //        model.addColumn("Kelas");
 //        model.addColumn("Pekerjaan");
 //        model.addColumn("Alm. KTP");
@@ -48,7 +48,7 @@ public class Main extends javax.swing.JFrame {
 //        model.addColumn("Jml Saudara");
 //        model.addColumn("IG");
 //        model.addColumn("FB");
-        model.addColumn("Nama Ibu"); //16
+ //       model.addColumn("Nama Ibu"); //16
 //        model.addColumn("Pekerjaan Ibu");
 //        model.addColumn("No HP Ibu");
 //        model.addColumn("Nama Ayah");
@@ -57,11 +57,13 @@ public class Main extends javax.swing.JFrame {
 //        model.addColumn("Alamat Ortu");
 //        model.addColumn("Tlp Rumah");
 //        model.addColumn("Email Ortu");
-        model.addColumn("Program"); //25
-        model.addColumn("Pembayaran"); //26
-//        model.addColumn("Biaya");
+        model.addColumn("Program"); //24
+        model.addColumn("Kelas");
+        //model.addColumn("Pembayaran"); //25
+        model.addColumn("Biaya");
 //        model.addColumn("Dibayar");
-        model.addColumn("Sisa");
+        model.addColumn("Sisa"); //28
+        model.addColumn("No Telp");
 
       tTable.setRowHeight(2, 70);
       
@@ -85,16 +87,21 @@ public class Main extends javax.swing.JFrame {
             
             while(res.next()){
                 model.addRow(new Object[]{
-                    res.getString(1),res.getString(2),//res.getString(3),
-                    res.getString(4),
+                    res.getString(1),
+                    res.getString(2),//res.getString(3),
+                    //res.getString(4),
                     //res.getString(5),res.getString(6),res.getString(7),res.getString(8),
                     //res.getString(9),res.getString(10),res.getString(11),res.getString(12),
                     //res.getString(13),res.getString(14),res.getString(15),
-                    res.getString(16),
+                   // res.getString(16),
                     //res.getString(17),res.getString(18),res.getString(19),res.getString(20),
                     //res.getString(21),res.getString(22),res.getString(23),res.getString(24),
-                    res.getString(25),res.getString(26),//,res.getString(27),res.getString(28),
-                    res.getString(29)
+                    res.getString(24),
+                    res.getString(29),
+                    res.getString(25),
+                    //res.getString(27),res.getString(27),res.getString(28),
+                    res.getString(27),
+                    res.getString(11)
                     
                 });
             }
@@ -139,7 +146,7 @@ public class Main extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Kampung English Course");
+        setTitle("Kampoong English Course");
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -310,7 +317,7 @@ public class Main extends javax.swing.JFrame {
        try{
            String st = txtCari.getText().trim();
            java.sql.Connection conn = (Connection)Konfig.configDB();
-           java.sql.PreparedStatement pst = conn.prepareStatement("SELECT no, nama, asal_pendidikan, nama_ibu, program, payment FROM siswa where nama like'"+st+ "%'");
+           java.sql.PreparedStatement pst = conn.prepareStatement("SELECT no, nama, program, kelas_p, biaya, sisa, nohp FROM siswa where nama like'"+st+ "%'");
 //           pst.setString(1, String.valueOf(txtCari.getText().trim()));
            java.sql.ResultSet rs = pst.executeQuery();
            tTable.setModel(DbUtils.resultSetToTableModel(rs));
